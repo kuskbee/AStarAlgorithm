@@ -103,7 +103,6 @@ void Grid::PrintWallChar(int y, int x) {
 	bool left = (x > 0)						&& (Map[y][x - 1].NodeType == 1);
 	bool right = (x < Map[0].size() - 1)	&& (Map[y][x + 1].NodeType == 1);
 
-	// 예시 매핑 (상황에 따라 조정)
 	if (up && down && left && right) cout << "┼";
 	else if (up && left && !right && !down) cout << "┘";
 	else if (up && right && !left && !down) cout << "└";
