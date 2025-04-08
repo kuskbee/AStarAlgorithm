@@ -97,6 +97,30 @@ void Grid::ReadFromFile_CStyle(const string& Filename)
 	fclose(fp);
 }
 
+void Grid::PrintWallChar(int y, int x) {
+	bool up = (y > 0)						&& (Map[y - 1][x].NodeType == 1);
+	bool down = (y < Map.size() - 1)		&& (Map[y + 1][x].NodeType == 1);
+	bool left = (x > 0)						&& (Map[y][x - 1].NodeType == 1);
+	bool right = (x < Map[0].size() - 1)	&& (Map[y][x + 1].NodeType == 1);
+
+	// 예시 매핑 (상황에 따라 조정)
+	if (up && down && left && right) cout << "┼";
+	else if (up && left && !right && !down) cout << "┘";
+	else if (up && right && !left && !down) cout << "└";
+	else if (down && left && !up && !right) cout << "┐";
+	else if (down && right && !up && !left) cout << "┌";
+	else if (left && right && !up && !down) cout << "─";
+	else if (up && down && !left && !right) cout << "│";
+	else if (up && down && left && !right) cout << "┤";
+	else if (up && down && right && !left) cout << "├";
+	else if (left && right && up && !down) cout << "┴";
+	else if (left && right && down && !up) cout << "┬";
+	else if (left || right) cout << "─";
+	else if (up || down ) cout << "│";
+	else cout << '*';
+}
+
+
 void Grid::PrintGrid()
 {
 	if (Map.size() <= 0) {
@@ -107,19 +131,21 @@ void Grid::PrintGrid()
 	for (int y = 0; y < Map.size(); y++) {
 		for (int x = 0; x < Map[y].size(); x++) {
 			if (Map[y][x].NodeType == 1) {
-				cout << "*";
+				//cout << "*";
+				//PrintWallChar(y, x);
+				cout << "■";
 			}
 			else if (Map[y][x].NodeType == -1) {
-				cout << "@";
+				cout << "★";
 			}
 			else if (Map[y][x].NodeType == 3) {
-				cout << "S";
+				cout << "ⓢ";
 			}
 			else if (Map[y][x].NodeType == -3) {
-				cout << "E";
+				cout << "ⓔ";
 			}
 			else {
-				cout << " ";
+				cout << "　";
 			}
 		}
 		cout << endl;

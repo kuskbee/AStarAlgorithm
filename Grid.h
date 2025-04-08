@@ -17,6 +17,7 @@ public:
 	void ReadFromFile(const string& Filename);
 	void ReadFromFile_CStyle(const string& Filename);
 	void PrintGrid();
+	void PrintWallChar(int y, int x);
 	
 private:
 	vector<vector<Node>> Map;
