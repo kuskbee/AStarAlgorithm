@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 	//Grid StarGrid;
-	Grid StarGrid("matrix.txt");
+	CGrid StarGrid("matrix.txt");
 
 	StarGrid.PrintGrid();
 

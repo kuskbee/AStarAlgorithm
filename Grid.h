@@ -7,11 +7,11 @@
 
 using namespace std;
 
-class Grid
+class CGrid
 {
 public:
-	Grid();
-	Grid(const string& Filename);
+	CGrid();
+	CGrid(const string& Filename);
 
 	void InitGrid();
 	void ReadFromFile(const string& Filename);
@@ -20,7 +20,10 @@ public:
 	void PrintWallChar(int y, int x);
 	
 private:
-	vector<vector<Node>> Map;
+	vector<vector<CNode>> Map;
+
+	CNode* StartNode = nullptr;
+	CNode* TargetNode = nullptr;
 
 	size_t GridSizeX = 10;
 	size_t GridSizeY = 10;
