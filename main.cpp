@@ -1,14 +1,24 @@
 #include <iostream>
-#include "Grid.h"
+#include <conio.h>
+#include "FindingPath.h"
 
 using namespace std;
 
 int main()
 {
-	//Grid StarGrid;
-	CGrid StarGrid("matrix.txt");
+	CFindingPath fp;
+	while (true)
+	{
+		system("cls");
+		
+		fp.DrawGrid();
 
-	StarGrid.PrintGrid();
+		char c = _getch();
+		if (c == 'f')
+			fp.FindPath();
+		else if (c == 'q')
+			break;
+	}
 
 	return 0;
 }

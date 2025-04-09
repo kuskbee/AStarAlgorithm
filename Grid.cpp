@@ -4,7 +4,6 @@
 
 CGrid::CGrid()
 {
-	InitGrid();
 }
 
 CGrid::CGrid(const string& filename)
@@ -12,29 +11,48 @@ CGrid::CGrid(const string& filename)
 	ReadFromFile_CStyle(filename);
 }
 
-void CGrid::InitGrid()
+//void CGrid::InitGrid()
+//{
+//	vector<vector<int>> RawMap = {
+//		{1,1,1,1,1, 1,1,1,1,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,0,0,0,0, 0,0,0,0,1},
+//		{1,1,1,1,1, 1,1,1,1,1},
+//	};
+//
+//	GridSizeX = 10;
+//	GridSizeY = 10;
+//
+//	for (int y = 0; y < GridSizeY; y++) {
+//		for (int x = 0; x < GridSizeX; x++) {
+//			Map[y][x] = CNode(y, x, RawMap[y][x]);
+//		}
+//	}
+//}
+
+vector<CNode*> CGrid::GetNeighbours(CNode* node)
 {
-	vector<vector<int>> RawMap = {
-		{1,1,1,1,1, 1,1,1,1,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,0,0,0,0, 0,0,0,0,1},
-		{1,1,1,1,1, 1,1,1,1,1},
-	};
+	vector<CNode*> Neighbours;
+	for (int y = -1; y <= 1; y++) {
+		for (int x = -1; x <= 1; x++) {
+			if(x == 0 && y == 0) continue; // 자기 자신
 
-	GridSizeX = 10;
-	GridSizeY = 10;
+			int GridX = node->col + x;
+			int GridY = node->row + y;
 
-	for (int y = 0; y < GridSizeY; y++) {
-		for (int x = 0; x < GridSizeX; x++) {
-			Map[y][x] = CNode(y, x, RawMap[y][x]);
+			if (GridX >= 0 && GridX < GridSizeX && GridY >= 0 && GridY < GridSizeY)
+			{
+				Neighbours.push_back(&Map[GridY][GridX]);
+			}
 		}
 	}
+	return Neighbours;
 }
 
 void CGrid::ReadFromFile(const string& filename)
@@ -89,6 +107,12 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 			int TempValue = 0;
 			int ret = fscanf_s(fp, "%d", &TempValue);
 			Map[i][j] = CNode(i, j, TempValue);
+			if (TempValue == 3) {
+				StartNode = &Map[i][j];
+			}
+			else if (TempValue == -3) {
+				TargetNode = &Map[i][j];
+			}
 			if (ret == EOF) {
 				fclose(fp);
 				break;

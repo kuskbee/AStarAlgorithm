@@ -7,9 +7,12 @@ class CFindingPath
 public:
 	CFindingPath();
 
-
-	vector<CNode> OpenList;
-	vector<CNode> ClosedList;
+	void FindPath();
+	void DrawGrid();
+	
+private:
+	void RetracePath();
+	int GetDistanceCost(CNode* Start, CNode* End);
 
 
 	CGrid Grid;

@@ -13,7 +13,8 @@ public:
 	CGrid();
 	CGrid(const string& Filename);
 
-	void InitGrid();
+	//void InitGrid();
+	vector<CNode*> GetNeighbours(CNode* node);
 	void ReadFromFile(const string& Filename);
 	void ReadFromFile_CStyle(const string& Filename);
 	void PrintGrid();
@@ -28,4 +29,7 @@ private:
 	size_t GridSizeX = 10;
 	size_t GridSizeY = 10;
 
+public:
+	CNode* GetStartNode() { return StartNode; }
+	CNode* GetTargetNode() { return TargetNode; }
 };

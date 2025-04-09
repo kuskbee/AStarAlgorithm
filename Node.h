@@ -21,7 +21,7 @@ public:
 
 	int GCost = 0; // 시작 노드에서 해당 노드까지의 소요된 거리
 	int HCost = 0; // 해당 노드에서 타겟 노드까지의 예상 거리
-	CNode* Parent = nullptr;
+	CNode* ParentNode = nullptr;
 
 	bool operator < (const CNode& n) const
 	{
