@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include "Node.h"
 
 using namespace std;
@@ -21,7 +22,8 @@ public:
 	void PrintWallChar(int y, int x);
 	
 private:
-	vector<vector<CNode>> Map;
+	//vector<vector<CNode>> Map;
+	unordered_map<pair<int, int>, CNode> Map; // Key : (y, x), Value : CNode
 
 	CNode* StartNode = nullptr;
 	CNode* TargetNode = nullptr;
