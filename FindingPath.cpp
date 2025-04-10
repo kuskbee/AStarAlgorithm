@@ -68,8 +68,7 @@ void CFindingPath::RetracePath()
 
 	while (CurrentNode != StartNode)
 	{
-		if (CurrentNode->NodeType == 0)
-			CurrentNode->NodeType = -1;
+		CurrentNode->NodeType = -1;
 		
 		CurrentNode = CurrentNode->ParentNode;
 	}

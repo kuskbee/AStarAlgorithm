@@ -66,6 +66,8 @@ void CGrid::ReadFromFile(const string& filename)
 	int rows, cols;
 	file >> rows >> cols; // 파일에 행과 열의 수가 저장되어있다고 가정
 	Map.assign(rows, vector<CNode>(cols));
+	GridSizeX = cols;
+	GridSizeY = rows;
 
 	int TempValue = 0;
 	for (int i = 0; i < rows; i++) {
@@ -99,6 +101,8 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 		fclose(fp);
 		return;
 	}
+	GridSizeX = cols;
+	GridSizeY = rows;
 
 	Map.assign(rows, vector<CNode>(cols));
 
@@ -166,6 +170,9 @@ void CGrid::PrintGrid()
 			}
 			else if (Map[y][x].NodeType == -1) {
 				cout << "★";
+			}
+			else if (Map[y][x].NodeType == 10) {
+				cout << "◎";
 			}
 			else if (Map[y][x].NodeType == 3) {
 				cout << "ⓢ";
