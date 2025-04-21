@@ -13,9 +13,11 @@ void CFindingPath::FindPath()
 {
 	CNode* StartNode = Grid.GetStartNode();
 	CNode* TargetNode = Grid.GetTargetNode();
-	priority_queue<CNode*, vector<CNode*>, greater<CNode*>> OpenListQueue; // 오름차순 (비용 적은순)
+	priority_queue<CNode*, vector<CNode*>, NodePtrGreator> OpenListQueue; // 오름차순 (비용 적은순)
 	unordered_set<CNode*> OpenListSet;
 	unordered_set<CNode*> ClosedListSet;
+
+	StartNode->GCost = 0;
 	OpenListQueue.push(StartNode);
 	OpenListSet.insert(StartNode);
 

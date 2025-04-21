@@ -19,7 +19,7 @@ public:
 	int col;
 	int NodeType;
 
-	int GCost = 0; // 시작 노드에서 해당 노드까지의 소요된 거리
+	int GCost = INT_MAX; // 시작 노드에서 해당 노드까지의 소요된 거리
 	int HCost = 0; // 해당 노드에서 타겟 노드까지의 예상 거리
 	CNode* ParentNode = nullptr;
 
@@ -33,4 +33,19 @@ public:
 			return false;
 	}
 
+};
+
+// min-heap
+struct NodePtrGreator
+{
+	bool operator()(const CNode* a, const CNode* b) const
+	{
+		// // f가 작을수록 우선, f가 같으면 h가 작을수록 우선
+		if (a->GetFCost() != b->GetFCost())
+		{
+			return a->GetFCost() > b->GetFCost();
+		}
+
+		return a->HCost > b->HCost;
+	}
 };
