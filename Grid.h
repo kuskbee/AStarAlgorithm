@@ -20,9 +20,8 @@ public:
 	void PrintGrid();
 	void PrintWallChar(int y, int x);
 	
-private:
 	vector<vector<CNode>> Map;
-
+private:
 	CNode* StartNode = nullptr;
 	CNode* TargetNode = nullptr;
 
@@ -32,4 +31,6 @@ private:
 public:
 	CNode* GetStartNode() { return StartNode; }
 	CNode* GetTargetNode() { return TargetNode; }
+	size_t GetGridSizeX() { return GridSizeX; }
+	size_t GetGridSizeY() { return GridSizeY; }
 };

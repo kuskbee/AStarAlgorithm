@@ -1,6 +1,7 @@
 #include "FindingPath.h"
 #include <queue>
-#include <unordered_set>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -23,6 +24,8 @@ void CFindingPath::FindPath()
 
 	while (OpenListQueue.size() > 0) {
 		CNode* CurrentNode = OpenListQueue.top();
+		DrawGridStep(CurrentNode, OpenListSet, ClosedListSet);
+
 		OpenListQueue.pop();
 		OpenListSet.erase(CurrentNode);
 		ClosedListSet.insert(CurrentNode);
@@ -62,6 +65,31 @@ void CFindingPath::DrawGrid()
 	Grid.PrintGrid();
 }
 
+void CFindingPath::DrawGridStep(CNode* CurrentNode, 
+								const unordered_set<CNode*>& OpenListSet,
+								const unordered_set<CNode*>& CloseListSet)
+{
+	system("cls");
+	size_t GridSizeX = Grid.GetGridSizeX();
+	size_t GridSizeY = Grid.GetGridSizeY();
+	for (int y = 0; y < GridSizeY; y++)
+	{
+		for (int x = 0; x < GridSizeX; x++)
+		{
+			CNode& Node = Grid.Map[y][x];
+			if (&Node == CurrentNode)	cout << "¡Ý";
+			else if (CloseListSet.count(&Node)) cout << "¡Ü";
+			else if (OpenListSet.count(&Node)) cout << "¡Û";
+			else if (Node.NodeType == 1) cout << "¡á";
+			else if (Node.NodeType == 3) cout << "¨ß";
+			else if (Node.NodeType == -3) cout << "¨à";
+			else	cout << "¡¡";
+		}
+		cout << endl;
+	}
+	this_thread::sleep_for(chrono::milliseconds(500));
+}
+
 void CFindingPath::RetracePath()
 {
 	CNode* StartNode = Grid.GetStartNode();
@@ -70,7 +98,10 @@ void CFindingPath::RetracePath()
 
 	while (CurrentNode != StartNode)
 	{
-		CurrentNode->NodeType = -1;
+		if (CurrentNode != TargetNode)
+		{
+			CurrentNode->NodeType = -1;
+		}
 		
 		CurrentNode = CurrentNode->ParentNode;
 	}

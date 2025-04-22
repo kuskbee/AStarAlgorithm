@@ -163,21 +163,18 @@ void CGrid::PrintGrid()
 
 	for (int y = 0; y < Map.size(); y++) {
 		for (int x = 0; x < Map[y].size(); x++) {
-			if (Map[y][x].NodeType == 1) {
+			if (Map[y][x].NodeType == 1) { // 벽
 				//cout << "*";
 				//PrintWallChar(y, x);
 				cout << "■";
 			}
-			else if (Map[y][x].NodeType == -1) {
+			else if (Map[y][x].NodeType == -1) { // 경로
 				cout << "★";
 			}
-			else if (Map[y][x].NodeType == 10) {
-				cout << "◎";
-			}
-			else if (Map[y][x].NodeType == 3) {
+			else if (Map[y][x].NodeType == 3) { // 시작점
 				cout << "ⓢ";
 			}
-			else if (Map[y][x].NodeType == -3) {
+			else if (Map[y][x].NodeType == -3) { // 끝점
 				cout << "ⓔ";
 			}
 			else {
