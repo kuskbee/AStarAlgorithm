@@ -15,9 +15,19 @@ int main()
 
 		char c = _getch();
 		if (c == 'f')
-			fp.FindPath();
-		else if (c == 'q')
+		{
+			vector<CNode*> StartNodes = fp.GetStartNodes();
+			CNode* TargetNode = fp.GetTargetNode();
+			for(auto SNode : StartNodes)
+			{
+				fp.FindPath(SNode, TargetNode);
+			}
 			break;
+		}
+		else if (c == 'q')
+		{
+			break;
+		}
 	}
 
 	return 0;

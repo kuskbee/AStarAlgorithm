@@ -75,7 +75,7 @@ void CGrid::ReadFromFile(const string& filename)
 			file >> TempValue;
 			Map[i][j] = CNode(i, j, TempValue);
 			if (TempValue == 3) {
-				StartNode = &Map[i][j];
+				StartNodes.push_back(&Map[i][j]);
 			}
 			else if (TempValue == -3) {
 				TargetNode = &Map[i][j];            
@@ -112,7 +112,7 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 			int ret = fscanf_s(fp, "%d", &TempValue);
 			Map[i][j] = CNode(i, j, TempValue);
 			if (TempValue == 3) {
-				StartNode = &Map[i][j];
+				StartNodes.push_back(&Map[i][j]);
 			}
 			else if (TempValue == -3) {
 				TargetNode = &Map[i][j];
@@ -130,29 +130,6 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 	}
 	fclose(fp);
 }
-
-void CGrid::PrintWallChar(int y, int x) {
-	bool up = (y > 0)						&& (Map[y - 1][x].NodeType == 1);
-	bool down = (y < Map.size() - 1)		&& (Map[y + 1][x].NodeType == 1);
-	bool left = (x > 0)						&& (Map[y][x - 1].NodeType == 1);
-	bool right = (x < Map[0].size() - 1)	&& (Map[y][x + 1].NodeType == 1);
-
-	if (up && down && left && right) cout << "¦«";
-	else if (up && left && !right && !down) cout << "¦¥";
-	else if (up && right && !left && !down) cout << "¦¦";
-	else if (down && left && !up && !right) cout << "¦¤";
-	else if (down && right && !up && !left) cout << "¦£";
-	else if (left && right && !up && !down) cout << "¦¡";
-	else if (up && down && !left && !right) cout << "¦¢";
-	else if (up && down && left && !right) cout << "¦©";
-	else if (up && down && right && !left) cout << "¦§";
-	else if (left && right && up && !down) cout << "¦ª";
-	else if (left && right && down && !up) cout << "¦¨";
-	else if (left || right) cout << "¦¡";
-	else if (up || down ) cout << "¦¢";
-	else cout << '*';
-}
-
 
 void CGrid::PrintGrid()
 {

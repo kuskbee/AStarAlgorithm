@@ -1,19 +1,16 @@
 #include "FindingPath.h"
 #include <queue>
-#include <thread>
-#include <chrono>
 
 using namespace std;
 
 CFindingPath::CFindingPath()
 {
 	Grid.ReadFromFile_CStyle("matrix.txt");
+	Visualizer.Initialize(Grid.Map, Grid.GetGridSizeX(), Grid.GetGridSizeY());
 }
 
-void CFindingPath::FindPath()
+void CFindingPath::FindPath(CNode* StartNode, CNode* TargetNode)
 {
-	CNode* StartNode = Grid.GetStartNode();
-	CNode* TargetNode = Grid.GetTargetNode();
 	priority_queue<CNode*, vector<CNode*>, NodePtrGreator> OpenListQueue; // 오름차순 (비용 적은순)
 	unordered_set<CNode*> OpenListSet;
 	unordered_set<CNode*> ClosedListSet;
@@ -21,17 +18,19 @@ void CFindingPath::FindPath()
 	StartNode->GCost = 0;
 	OpenListQueue.push(StartNode);
 	OpenListSet.insert(StartNode);
+	Visualizer.OpenSet.insert(StartNode); //:Visualizer:
 
 	while (OpenListQueue.size() > 0) {
 		CNode* CurrentNode = OpenListQueue.top();
-		DrawGridStep(CurrentNode, OpenListSet, ClosedListSet);
-
+		Visualizer.DrawGridStep();
+		
 		OpenListQueue.pop();
 		OpenListSet.erase(CurrentNode);
 		ClosedListSet.insert(CurrentNode);
+		Visualizer.ClosedSet.insert(CurrentNode); //:Visualizer:
 
 		if (CurrentNode == TargetNode) {
-			RetracePath();
+			RetracePath(StartNode, TargetNode);
 			return;
 		}
 
@@ -65,46 +64,22 @@ void CFindingPath::DrawGrid()
 	Grid.PrintGrid();
 }
 
-void CFindingPath::DrawGridStep(CNode* CurrentNode, 
-								const unordered_set<CNode*>& OpenListSet,
-								const unordered_set<CNode*>& CloseListSet)
+void CFindingPath::RetracePath(CNode* StartNode, CNode* TargetNode)
 {
-	system("cls");
-	size_t GridSizeX = Grid.GetGridSizeX();
-	size_t GridSizeY = Grid.GetGridSizeY();
-	for (int y = 0; y < GridSizeY; y++)
-	{
-		for (int x = 0; x < GridSizeX; x++)
-		{
-			CNode& Node = Grid.Map[y][x];
-			if (&Node == CurrentNode)	cout << "◎";
-			else if (CloseListSet.count(&Node)) cout << "●";
-			else if (OpenListSet.count(&Node)) cout << "○";
-			else if (Node.NodeType == 1) cout << "■";
-			else if (Node.NodeType == 3) cout << "ⓢ";
-			else if (Node.NodeType == -3) cout << "ⓣ";
-			else	cout << "　";
-		}
-		cout << endl;
-	}
-	this_thread::sleep_for(chrono::milliseconds(500));
-}
-
-void CFindingPath::RetracePath()
-{
-	CNode* StartNode = Grid.GetStartNode();
-	CNode* TargetNode = Grid.GetTargetNode();
 	CNode* CurrentNode = TargetNode;
 
 	while (CurrentNode != StartNode)
 	{
 		if (CurrentNode != TargetNode)
 		{
-			CurrentNode->NodeType = -1;
+			//CurrentNode->NodeType = -1;
+			Visualizer.PathSet.insert(CurrentNode); //:Visualizer:
 		}
 		
 		CurrentNode = CurrentNode->ParentNode;
 	}
+
+	Visualizer.DrawGridStep();
 }
 
 int CFindingPath::GetDistanceCost(CNode* Start, CNode* End)

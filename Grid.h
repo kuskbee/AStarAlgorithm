@@ -18,18 +18,17 @@ public:
 	void ReadFromFile(const string& Filename);
 	void ReadFromFile_CStyle(const string& Filename);
 	void PrintGrid();
-	void PrintWallChar(int y, int x);
-	
+
 	vector<vector<CNode>> Map;
 private:
-	CNode* StartNode = nullptr;
+	vector<CNode*> StartNodes;
 	CNode* TargetNode = nullptr;
 
 	size_t GridSizeX = 10;
 	size_t GridSizeY = 10;
 
 public:
-	CNode* GetStartNode() { return StartNode; }
+	vector<CNode*>& GetStartNodes() { return StartNodes; }
 	CNode* GetTargetNode() { return TargetNode; }
 	size_t GetGridSizeX() { return GridSizeX; }
 	size_t GetGridSizeY() { return GridSizeY; }
