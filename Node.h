@@ -35,6 +35,19 @@ public:
 
 };
 
+struct NodeState
+{
+	int GCost = INT_MAX;
+	int HCost = 0;
+	int ParentRow = -1;
+	int ParentCol = -1;
+
+	bool bOpenList = false;
+	bool bClosedList = false;
+};
+
+
+
 // min-heap
 struct NodePtrGreator
 {
