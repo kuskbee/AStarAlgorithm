@@ -27,6 +27,9 @@
     <ClCompile Include="Visualizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MarkMsgQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grid.h">
@@ -40,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="Visualizer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MarkMsgQueue.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

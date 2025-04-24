@@ -6,23 +6,17 @@
 class CFindingPath
 {
 public:
-	CFindingPath();
+	CFindingPath(CGrid& Grid, CMarkMsgQueue* MsgQueue);
 
 	void FindPath(CNode* StartNode, CNode* TargetNode);
 	void DrawGrid();
-	vector<CNode*>& GetStartNodes()
-	{
-		return Grid.GetStartNodes();
-	}
-	CNode* GetTargetNode()
-	{
-		return Grid.GetTargetNode();
-	}
 
 private:			  
-	void RetracePath(CNode* StartNode, CNode* TargetNode);
+	void RetracePath(CNode* StartNode, CNode* TargetNode, 
+					CGrid& Grid,
+					vector<vector<NodeState>>& Costs);
 	int GetDistanceCost(CNode* Start, CNode* End);
 
-	CGrid Grid;
-	CVisualizer Visualizer;
+	CGrid& Grid;
+	CMarkMsgQueue* MsgQueue = nullptr;
 };

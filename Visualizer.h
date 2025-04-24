@@ -4,8 +4,10 @@
 #include <vector>
 #include <unordered_set>
 #include "Node.h"
+#include "MarkMsgQueue.h"
 
 using namespace std;
+
 
 class CVisualizer
 {
@@ -17,10 +19,14 @@ public:
 	unordered_set<CNode*> ClosedSet;
 	unordered_set<CNode*> PathSet;
 
+	void PumpAndDraw(size_t ExpectedDone);
+
 	void DrawGridStep();
 
 	size_t GridSizeX = 10;
 	size_t GridSizeY = 10;
+
+	CMarkMsgQueue MsgQueue;
 
 };
 

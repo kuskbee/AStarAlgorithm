@@ -43,8 +43,8 @@ vector<CNode*> CGrid::GetNeighbours(CNode* node)
 		for (int x = -1; x <= 1; x++) {
 			if(x == 0 && y == 0) continue; // 자기 자신
 
-			int GridX = node->col + x;
-			int GridY = node->row + y;
+			int GridX = node->Col + x;
+			int GridY = node->Row + y;
 
 			if (GridX >= 0 && GridX < GridSizeX && GridY >= 0 && GridY < GridSizeY)
 			{

@@ -2,6 +2,9 @@
 #include <thread>
 #include <chrono>
 
+using Clock = std::chrono::steady_clock;
+using MilliSeconds = std::chrono::milliseconds;
+constexpr MilliSeconds DeltaTick = MilliSeconds(16);
 
 void CVisualizer::Initialize(vector<vector<CNode>>& Grid, size_t SizeX, size_t SizeY)
 {
@@ -17,6 +20,43 @@ void CVisualizer::Initialize(vector<vector<CNode>>& Grid, size_t SizeX, size_t S
 			CNode* Origin = &Grid[y][x];
 			GridMap[y][x] = Origin;
 		}
+	}
+}
+
+void CVisualizer::PumpAndDraw(size_t ExpectedDone)
+{
+	//auto NextTick = Clock::now();
+
+	size_t DoneCnt = 0;
+	while (DoneCnt < ExpectedDone)
+	{
+		CMarkMsgQueue::MarkMsg Msg;
+		MsgQueue.WaitPop(Msg);
+		if (Msg.Type == CMarkMsgQueue::Mark::Open)
+		{
+			OpenSet.insert(GridMap[Msg.Row][Msg.Col]);
+		}
+		else if (Msg.Type == CMarkMsgQueue::Mark::Close)
+		{
+			ClosedSet.insert(GridMap[Msg.Row][Msg.Col]);
+		}
+		else if (Msg.Type == CMarkMsgQueue::Mark::Path)
+		{
+			PathSet.insert(GridMap[Msg.Row][Msg.Col]);
+		}
+		else if (Msg.Type == CMarkMsgQueue::Mark::Done)
+		{
+			++DoneCnt;
+		}
+
+		DrawGridStep();
+		/*auto Now = Clock::now();
+
+		if (Now >= NextTick)
+		{
+			DrawGridStep();
+			NextTick += DeltaTick;
+		}*/
 	}
 }
 
@@ -40,5 +80,5 @@ void CVisualizer::DrawGridStep()
 		}
 		cout << endl;
 	}
-	this_thread::sleep_for(chrono::milliseconds(100));
+	//this_thread::sleep_for(chrono::milliseconds(1));
 }
