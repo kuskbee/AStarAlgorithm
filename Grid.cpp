@@ -6,7 +6,7 @@ CGrid::CGrid()
 {
 }
 
-CGrid::CGrid(const string& filename)
+CGrid::CGrid(const std::string& filename)
 {
 	ReadFromFile_CStyle(filename);
 }
@@ -36,9 +36,9 @@ CGrid::CGrid(const string& filename)
 //	}
 //}
 
-vector<CNode*> CGrid::GetNeighbours(CNode* node)
+std::vector<CNode*> CGrid::GetNeighbours(CNode* node)
 {
-	vector<CNode*> Neighbours;
+	std::vector<CNode*> Neighbours;
 	for (int y = -1; y <= 1; y++) {
 		for (int x = -1; x <= 1; x++) {
 			if(x == 0 && y == 0) continue; // 자기 자신
@@ -55,17 +55,17 @@ vector<CNode*> CGrid::GetNeighbours(CNode* node)
 	return Neighbours;
 }
 
-void CGrid::ReadFromFile(const string& filename)
+void CGrid::ReadFromFile(const std::string& filename)
 {
-	ifstream file(filename);
+	std::ifstream file(filename);
 	if (!file) {
-		cerr << "파일 열기 실패: " << filename << endl;
+		std::cerr << "파일 열기 실패: " << filename << std::endl;
 		return;
 	}
 
 	int rows, cols;
 	file >> rows >> cols; // 파일에 행과 열의 수가 저장되어있다고 가정
-	Map.assign(rows, vector<CNode>(cols));
+	Map.assign(rows, std::vector<CNode>(cols));
 	GridSizeX = cols;
 	GridSizeY = rows;
 
@@ -86,7 +86,7 @@ void CGrid::ReadFromFile(const string& filename)
 	file.close();
 }
 
-void CGrid::ReadFromFile_CStyle(const string& Filename)
+void CGrid::ReadFromFile_CStyle(const std::string& Filename)
 {
 	FILE* fp = nullptr;
 	errno_t err = fopen_s(&fp, "matrix.txt", "r");
@@ -104,7 +104,7 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 	GridSizeX = cols;
 	GridSizeY = rows;
 
-	Map.assign(rows, vector<CNode>(cols));
+	Map.assign(rows, std::vector<CNode>(cols));
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
@@ -134,7 +134,7 @@ void CGrid::ReadFromFile_CStyle(const string& Filename)
 void CGrid::PrintGrid()
 {
 	if (Map.size() <= 0) {
-		cout << "Grid가 초기화되지 않았습니다." << endl;
+		std::cout << "Grid가 초기화되지 않았습니다." << std::endl;
 		return;
 	}
 
@@ -143,21 +143,21 @@ void CGrid::PrintGrid()
 			if (Map[y][x].NodeType == 1) { // 벽
 				//cout << "*";
 				//PrintWallChar(y, x);
-				cout << "■";
+				std::cout << "■";
 			}
 			else if (Map[y][x].NodeType == -1) { // 경로
-				cout << "★";
+				std::cout << "★";
 			}
 			else if (Map[y][x].NodeType == 3) { // 시작점
-				cout << "ⓢ";
+				std::cout << "ⓢ";
 			}
 			else if (Map[y][x].NodeType == -3) { // 끝점
-				cout << "ⓔ";
+				std::cout << "ⓔ";
 			}
 			else {
-				cout << "　";
+				std::cout << "　";
 			}
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 }

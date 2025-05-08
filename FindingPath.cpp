@@ -1,8 +1,6 @@
 #include "FindingPath.h"
 #include <queue>
 
-using namespace std;
-
 CFindingPath::CFindingPath(CGrid& Grid, CMarkMsgQueue* MsgQueue)
 	:Grid(Grid), MsgQueue(MsgQueue)
 {
@@ -12,11 +10,11 @@ void CFindingPath::FindPath(CNode* StartNode, CNode* TargetNode)
 {
 	int SizeX = Grid.GetGridSizeX();
 	int SizeY = Grid.GetGridSizeY();
-	vector<vector<NodeState>> Cost (SizeY, vector<NodeState>(SizeX));
+	std::vector<std::vector<NodeState>> Cost (SizeY, std::vector<NodeState>(SizeX));
 	NodeStateGreator Cmp{ &Cost };
-	priority_queue<CNode*, vector<CNode*>, NodeStateGreator> OpenListQueue(Cmp); // 오름차순 (비용 적은순)
-	unordered_set<CNode*> OpenListSet;
-	unordered_set<CNode*> ClosedListSet;
+	std::priority_queue<CNode*, std::vector<CNode*>, NodeStateGreator> OpenListQueue(Cmp); // 오름차순 (비용 적은순)
+	std::unordered_set<CNode*> OpenListSet;
+	std::unordered_set<CNode*> ClosedListSet;
 
 	Cost[StartNode->Row][StartNode->Col].GCost = 0;
 	OpenListQueue.push(StartNode);
@@ -46,7 +44,7 @@ void CFindingPath::FindPath(CNode* StartNode, CNode* TargetNode)
 			return;
 		}
 
-		vector<CNode*> Neighbours = Grid.GetNeighbours(CurrentNode);
+		std::vector<CNode*> Neighbours = Grid.GetNeighbours(CurrentNode);
 		for (CNode* Node : Neighbours)
 		{
 			// 벽이거나 이미 탐색한 노드라면 스킵
@@ -85,7 +83,7 @@ void CFindingPath::DrawGrid()
 
 void CFindingPath::RetracePath(CNode* StartNode, CNode* TargetNode,
 								CGrid& Grid,
-								vector<vector<NodeState>>& Costs)
+	std::vector<std::vector<NodeState>>& Costs)
 {
 	CNode* CurrentNode = TargetNode;
 

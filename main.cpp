@@ -4,8 +4,6 @@
 #include "FindingPath.h"
 #include "Visualizer.h"
 
-using namespace std;
-
 int main()
 {
 	CGrid Grid;
@@ -13,14 +11,14 @@ int main()
 	CVisualizer Visualizer;
 	Visualizer.Initialize(Grid.Map, Grid.GetGridSizeX(), Grid.GetGridSizeY());
 
-	vector<thread> workers;
+	std::vector<std::thread> workers;
 
 	while (true)
 	{
 		char c = _getch();
 		if (c == 'f')
 		{
-			vector<CNode*> StartNodes = Grid.GetStartNodes();
+			std::vector<CNode*> StartNodes = Grid.GetStartNodes();
 			CNode* TargetNode = Grid.GetTargetNode();
 			for(auto* SNode : StartNodes)
 			{
@@ -37,7 +35,7 @@ int main()
 			{
 				th.join();
 			}
-			std::cout << "All paths finished." << std::endl;
+			
 			break;
 		}
 		else if (c == 'q')

@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_set>
 #include "Grid.h"
-#include "Visualizer.h"
+#include "MarkMsgQueue.h"
 
 class CFindingPath
 {
@@ -14,7 +14,7 @@ public:
 private:			  
 	void RetracePath(CNode* StartNode, CNode* TargetNode, 
 					CGrid& Grid,
-					vector<vector<NodeState>>& Costs);
+		std::vector<std::vector<NodeState>>& Costs);
 	int GetDistanceCost(CNode* Start, CNode* End);
 
 	CGrid& Grid;
